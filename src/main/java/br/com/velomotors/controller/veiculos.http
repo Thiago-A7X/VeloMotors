@@ -1,0 +1,53 @@
+### Cadastrar veículo
+POST http://localhost:8080/veiculos
+
+### Listar todos os veículos
+GET http://localhost:8080/veiculos
+Content-Type: application/json
+
+### Consultar veículo pela placa
+GET http://localhost:8080/veiculos/placa/ABC1D23
+
+### Filtrar veículos pela marca
+GET http://localhost:8080/veiculos/marca/Volkswagen
+
+### Filtrar veículos pelo modelo
+GET http://localhost:8080/veiculos/modelo/Gol
+
+### Filtrar veículos pelo ano
+GET http://localhost:8080/veiculos/ano/2015
+
+### Filtrar veículos por faixa de preço
+GET http://localhost:8080/veiculos/preco?precoMinimo=20000&precoMaximo=30000
+
+### Veículos disponíveis
+GET http://localhost:8080/veiculos/disponibilidade/true
+
+### Veículos indisponíveis
+GET http://localhost:8080/veiculos/disponibilidade/false
+
+### Excluir veículo pela placa
+DELETE http://localhost:8080/veiculos/placa/ABC1D23
+
+### Cadastrar veículo para testes
+POST http://localhost:8080/veiculos
+Content-Type: application/json
+
+{
+  "placa": "ABC1D23",
+  "modelo": {"id": 4},
+  "ano": 2015,
+  "cor": "Prata",
+  "preco": 27860.00,
+  "quilometragem": 56123,
+  "disponivel": true
+}
+
+### Atualizar preço do veículo
+PUT http://localhost:8080/veiculos/preco/ABC1D23?novoPreco=30000
+
+### Atualizar quilometragem do veículo
+PUT http://localhost:8080/veiculos/quilometragem/ABC1D23?novaQuilometragem=60000
+
+### Atualizar disponibilidade do veículo
+PUT http://localhost:8080/veiculos/disponibilidade/ABC1D23?novaDisponibilidade=false
