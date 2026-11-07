@@ -1,0 +1,213 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VeloMotors</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+
+    <!-- Menu lateral -->
+    <aside class="menu-lateral">
+        <div class="logo-container">
+            <img src="logo.png" alt="Logo VeloMotors" class="logo">
+        </div>
+        <nav>
+            <a href="#" onclick="abrirInicio()">Início</a>
+            <a href="#" onclick="abrirCadastro()">Cadastrar veículo</a>
+            <a href="#" onclick="abrirVeiculos()">Veículos cadastrados</a>
+            <a href="#" onclick="abrirConsulta()">Consultar veículo</a>
+            <a href="#" onclick="abrirCadastroMarca()">Cadastrar marca</a>
+            <a href="#" onclick="abrirCadastroModelo()">Cadastrar modelo</a>
+        </nav>
+    </aside>
+
+    <!-- Conteúdo principal -->
+    <main class="conteudo">
+
+        <!-- Tela inicial -->
+        <div id="tela-inicio">
+            <h1>Seja bem-vindo à VeloMotors!</h1>
+            <p>Sistema de gerenciamento de veículos</p>
+
+            <div class="cartoes">
+                <div class="cartao" onclick="abrirCadastro()">
+                    <h3>Cadastrar veículo</h3>
+                    <p>Adicione um novo carro ou moto ao sistema.</p>
+                </div>
+
+                <div class="cartao" onclick="abrirVeiculos()">
+                    <h3>Veículos cadastrados</h3>
+                    <p>Visualize todos os veículos da concessionária.</p>
+                </div>
+
+                <div class="cartao" onclick="abrirConsulta()">
+                    <h3>Consultar veículo</h3>
+                    <p>Pesquise um veículo pela placa.</p>
+                </div>
+
+                <div class="cartao" onclick="abrirCadastroMarca()">
+                    <h3>Cadastrar marca</h3>
+                    <p>Adicione novas marcas ao sistema.</p>
+                </div>
+
+                <div class="cartao" onclick="abrirCadastroModelo()">
+                    <h3>Cadastrar modelo</h3>
+                    <p>Cadastre modelos vinculados às marcas.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tela de cadastro de veículo -->
+        <div id="tela-cadastro" style="display: none;">
+            <h1>Cadastrar veículo</h1>
+            <p>Preencha os dados do veículo abaixo.</p>
+
+            <form id="form-veiculo">
+                <label>Placa:</label>
+                <input type="text" id="placa" placeholder="Ex: ABC1D23">
+
+                <label>Marca:</label>
+                <select id="marca" onchange="carregarModelos()">
+                    <option value="">Selecione a marca</option>
+                </select>
+
+                <label>Modelo:</label>
+                <select id="modelo">
+                    <option value="">Selecione o modelo</option>
+                </select>
+
+                <label>Ano:</label>
+                <input type="number" id="ano" placeholder="Ex: 2020">
+
+                <label>Cor:</label>
+                <input type="text" id="cor" placeholder="Ex: Prata">
+
+                <label>Preço:</label>
+                <input type="number" id="preco" step="0.01" placeholder="Ex: 50000">
+
+                <label>Quilometragem:</label>
+                <input type="number" id="quilometragem" placeholder="Ex: 30000">
+
+                <label>Disponibilidade:</label>
+                <select id="disponivel">
+                    <option value="true">Disponível</option>
+                    <option value="false">Vendido</option>
+                </select>
+
+                <button type="submit">Cadastrar veículo</button>
+            </form>
+        </div>
+
+        <!-- Tela de veículos cadastrados -->
+        <div id="tela-veiculos" style="display: none;">
+            <h1>Veículos cadastrados</h1>
+            <p>Confira todos os veículos registrados na VeloMotors.</p>
+
+            <!-- Filtros de veículos -->
+            <div class="filtros">
+
+                <label>Marca:</label>
+                <select id="filtro-marca">
+                    <option value="">Todas as marcas</option>
+                </select>
+
+                <label>Modelo:</label>
+                <input type="text" id="filtro-modelo" placeholder="Digite o modelo">
+
+                <label>Ano:</label>
+                <input type="number" id="filtro-ano" placeholder="Ex: 2020">
+
+                <label>Preço mínimo:</label>
+                <input type="number" id="filtro-preco-min" placeholder="Ex: 10000">
+
+                <label>Preço máximo:</label>
+                <input type="number" id="filtro-preco-max" placeholder="Ex: 50000">
+
+                <label>Status:</label>
+                <select id="filtro-disponibilidade">
+                    <option value="">Todos</option>
+                    <option value="true">Disponível</option>
+                    <option value="false">Vendido</option>
+                </select>
+
+                <button type="button" onclick="filtrarVeiculos()">Filtrar</button>
+                <button type="button" onclick="limparFiltros()">Limpar filtros</button>
+
+            </div>
+
+            <table id="tabela-veiculos">
+                <thead>
+                <tr>
+                    <th>Placa</th>
+                    <th>Modelo</th>
+                    <th>Marca</th>
+                    <th>Ano</th>
+                    <th>Cor</th>
+                    <th>Preço</th>
+                    <th>Quilometragem</th>
+                    <th>Disponibilidade</th>
+                    <th>Ações</th>
+                </tr>
+                </thead>
+                <tbody id="lista-veiculos"></tbody>
+            </table>
+        </div>
+
+        <!-- Tela de consulta -->
+        <div id="tela-consulta" style="display: none;">
+            <h1>Consultar veículo</h1>
+            <p>Digite a placa para localizar um veículo cadastrado.</p>
+
+            <div class="campo-consulta">
+                <label for="placa-consulta">Placa do veículo:</label>
+                <input type="text" id="placa-consulta" placeholder="Ex: ABC2D34">
+
+                <button type="button" onclick="buscarVeiculo()">
+                    Buscar veículo
+                </button>
+            </div>
+
+            <div id="resultado-consulta"></div>
+        </div>
+
+        <!-- Tela de cadastro de marca -->
+        <div id="tela-marca" style="display: none;">
+            <h1>Cadastrar marca</h1>
+            <p>Informe o nome da nova marca.</p>
+
+            <form id="form-marca">
+                <label for="nome-marca">Nome da marca:</label>
+                <input type="text" id="nome-marca" placeholder="Ex: Chevrolet" required>
+
+                <button type="submit">Cadastrar marca</button>
+            </form>
+        </div>
+
+        <!-- Tela de cadastro de modelo -->
+        <div id="tela-modelo" style="display: none;">
+            <h1>Cadastrar modelo</h1>
+            <p>Informe o modelo e selecione a marca correspondente.</p>
+
+            <form id="form-modelo">
+                <label for="nome-modelo">Nome do modelo:</label>
+                <input type="text" id="nome-modelo" placeholder="Ex: Onix" required>
+
+                <label for="marca-modelo">Marca:</label>
+                <select id="marca-modelo" required>
+                    <option value="">Selecione a marca</option>
+                </select>
+
+                <button type="submit">Cadastrar modelo</button>
+            </form>
+        </div>
+
+    </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
